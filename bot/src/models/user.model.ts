@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGenerated
 import { UserBalanceModel } from './balance.model'
 import { UserSettingsModel } from './settings.model'
 import { BetModel } from './bet.model'
-import { UserStatsModel } from './stats'
+import { UserStatsModel } from './stats.model'
 
 @Entity('user')
 export class UserModel {
