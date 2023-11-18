@@ -1,6 +1,6 @@
 import { ITelegramData } from '../bot/middleware'
 import { DBConnection } from '../db'
-import { UserBalanceModel, UserModel, UserSettingsModel } from '../models'
+import { UserBalanceModel, UserModel, UserSettingsModel, UserStatsModel } from '../models'
 
 const userRepo = DBConnection.getRepository(UserModel)
 
@@ -33,6 +33,9 @@ export const createNewUser = async (telegramData: ITelegramData): Promise<UserMo
         user,
       })
       await transactionalEntityManager.save(UserSettingsModel, {
+        user,
+      })
+      await transactionalEntityManager.save(UserStatsModel, {
         user,
       })
       return user

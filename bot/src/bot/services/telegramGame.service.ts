@@ -5,7 +5,7 @@ import { IBetEndRequest, IBetStartRequest } from '../interfaces/bet.interface'
 import { getUserById } from '../../repository/user.repository'
 import { createBet, endBetModel, getBetById } from '../../repository/bet.repository'
 import { BetModel } from '../../models'
-import { updateUserBalance } from '../../repository'
+import { addUserStatsAfterBet, updateUserBalance } from '../../repository'
 import { OperatorEnum } from '../../enums'
 
 export const sendDice = async (ctx: MixContextUpdate, gameType: TelegramGameTypeEnum): Promise<(Dice & { messageId: number }) | undefined> => {
@@ -198,7 +198,6 @@ export const endBet = async (userId: number, endRequest: IBetEndRequest): Promis
     return new Error(`Error update bet in DB ${bet ? bet.message : ''}`)
   }
 
-  //обновляем баланс пользователя и награждаем реферала в случае победы
   if (endRequest.betResultStatus === BetStatusEnum.win) {
     const updatedUserBalanceResult = await updateUserBalance(user.id, OperatorEnum.plus, bet.payoutAmount!)
     if (updatedUserBalanceResult instanceof Error || !updatedUserBalanceResult) {
@@ -206,11 +205,8 @@ export const endBet = async (userId: number, endRequest: IBetEndRequest): Promis
     }
   }
 
-  // //добавляем оборот в статистику пользователя
-  // const updatedUserStatResult = await this.userStatsRepo.addUserStatsAfterBet(userId, bet.currency, bet.amount)
-  // if (updatedUserStatResult instanceof Error || !updatedUserStatResult) {
-  //   console.log(`Error update user stat in DB ${updatedUserStatResult ? updatedUserStatResult.message : ''}`)
-  // }
+  //добавляем оборот в статистику пользователя
+  await addUserStatsAfterBet(userId, bet.amount)
 
   return bet
 }

@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGenerated
 import { UserBalanceModel } from './balance.model'
 import { UserSettingsModel } from './settings.model'
 import { BetModel } from './bet.model'
+import { UserStatsModel } from './stats'
 
 @Entity('user')
 export class UserModel {
@@ -31,6 +32,9 @@ export class UserModel {
 
   @OneToOne(() => UserSettingsModel, (userSettings) => userSettings.user, { nullable: false })
   settings!: UserSettingsModel
+
+  @OneToOne(() => UserStatsModel, (userStats) => userStats.user, { nullable: false })
+  stats!: UserStatsModel
 
   @OneToMany(() => BetModel, (bet) => bet.user)
   bets!: BetModel[]
