@@ -2,7 +2,7 @@ import { config } from 'dotenv'
 import { DataSource, DataSourceOptions } from 'typeorm'
 
 // import { StartMigration } from './migrations'
-import { UserBalanceModel, UserModel, UserSettingsModel, BetModel } from '../src/models'
+import { UserBalanceModel, UserModel, UserSettingsModel, BetModel, UserStatsModel } from '../src/models'
 
 config()
 
@@ -17,7 +17,7 @@ export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   synchronize: true,
   url,
-  entities: [UserBalanceModel, UserModel, UserSettingsModel, BetModel],
+  entities: [UserBalanceModel, UserModel, UserSettingsModel, BetModel, UserStatsModel],
   migrations: [],
   ssl: ca ? { ca } : false,
 }

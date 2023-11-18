@@ -18,7 +18,7 @@ export const getUserByTelegramUserId = async (telegramId: number): Promise<UserM
     where: {
       telegramId,
     },
-    relations: ['balance', 'settings'],
+    relations: ['balance', 'settings', 'stats'],
   })
 }
 

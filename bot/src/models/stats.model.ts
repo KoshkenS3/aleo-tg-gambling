@@ -23,8 +23,6 @@ export class UserStatsModel extends BaseEntity {
     name: 'wager',
     type: 'numeric',
     default: 0,
-    precision: 12,
-    scale: 3,
     transformer: {
       to(value) {
         return value
